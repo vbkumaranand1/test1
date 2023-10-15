@@ -19,11 +19,6 @@
 
 
   <dependencies>
-<!--      <dependency>-->
-<!--          <groupId>junit</groupId>-->
-<!--          <artifactId>junit</artifactId>-->
-<!--          <version>3.8.1</version>-->
-<!--      </dependency>-->
 
     <dependency>
       <groupId>org.apache.poi</groupId>
@@ -72,13 +67,6 @@
       </dependency>
 
 
-<!--      !&#45;&#45; https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api &ndash;&gt;-->
-<!--      <de<pendency>-->
-<!--          <groupId>org.junit.jupiter</groupId>-->
-<!--          <artifactId>junit-jupiter-api</artifactId>-->
-<!--          <version>5.10.0</version>-->
-<!--          <scope>test</scope>-->
-<!--      </dependency>-->
       <dependency>
           <groupId>org.junit.jupiter</groupId>
           <artifactId>junit-jupiter</artifactId>
