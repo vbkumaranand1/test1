@@ -1,5 +1,6 @@
 package com.virtusa;
 
+import com.virtusa.pageobject.HomePage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ public class SeleniumTests {
     String url="https://www.automationanywhere.com/";
     String browser="edge"; //edge,chrome
     public static WebDriver driver;
+    public HomePage homePage;
 
         @Test
         public void launchBrowserVerifyLogoDisplayedTestCase(){
@@ -51,17 +53,21 @@ public class SeleniumTests {
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
                 driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(190));
                 driver.get(url);
+                homePage=new HomePage(driver);
+
                 //Close cookie accept
-                if(driver.findElement(By.xpath("//button[@id='onetrust-accept-btn-handler']")).isDisplayed()){
+                if(homePage.cookieAccept.isDisplayed()){
                     System.out.println("Clicked cookie accept");
-                    driver.findElement(By.xpath("//button[@id='onetrust-accept-btn-handler']")).click();
+                    homePage.cookieAccept.click();
                     driver.manage().window().maximize();
 
                 }else{
                     System.out.println("Not displayed Clicked cookie accept");
                 }
 
-                boolean blnStatus = driver.findElement(By.xpath("//img[@class='coh-image coh-image-responsive-xl' and contains(@alt,'Automation Anywhere')]")).isDisplayed();
+                //Logo is dispalyed
+                boolean blnStatus = homePage.logoElement.isDisplayed();
+
                 if(blnStatus){
                     System.out.println("Able to see the automationanywhere Logo image is displayed");
                 }else{
@@ -69,8 +75,9 @@ public class SeleniumTests {
                 }
                 Assertions.assertTrue(blnStatus,"Logo is not displayed");
 
-                //Logo is displayed
-                blnStatus =driver.findElement(By.xpath("//a[@title='Request Demo' and contains(@class,'coh-link utility-nav-link coh-style-solid-orange-button')]")).isEnabled();
+                //Request Demo button is enabled
+                blnStatus =homePage.btnRequestDemo.isEnabled();
+
                 if(blnStatus){
                     System.out.println("Able to see the automationanywhere 'Request Demo' button enabled");
                 }else{
@@ -90,10 +97,13 @@ public class SeleniumTests {
                 String[] linkToClick=new String[]{"Products","Solutions","Resources","Beyond RPA","Company"};
                 String[] pageTitle=new String[]{"Scale Your Business with Enterprise Automation","Tailored Automation Solutions",
                         "Automation Resources","Optimize Efficiency with Business Process Automation","Intelligent Automation Companies"};
+
                 WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(90));
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'coh-column primary-menu')]/ul/li/a")));
+
                 //Menu Items Displayed
                 List<WebElement> webElements = driver.findElements(By.xpath("//div[contains(@class,'coh-column primary-menu')]/ul/li/a"));
+
                 for(int i=0; i<webElements.size();i++){
 //                    System.out.println("Link Displayed :- "+webElements.get(i).getAttribute("text"));
                     if(webElements.get(i).getAttribute("text").equalsIgnoreCase(linkToClick[i])){
